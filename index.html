@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Management HQ</title>
+    <!-- 1. Include the Plotly.js library from a CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Basic styling to center the chart */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        #chartDiv {
+            width: 90vw;
+            height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- 2. This is the container where the chart will be rendered -->
+    <div id="chartDiv"></div>
+
+    <script>
+    // 3. Define the Hierarchical Data Structure in JavaScript
+    // This is where you can edit the wording, structure, and links.
+    // ---
+    const ids = [
+        "HQ",
+        "Foundational", "Health", "Knowledge", "Finance", "Career", "Social", "Lifestyle",
+        "Goals", "Habits", "Projects", "Time", "Decisions", "Values", "Mindset", "Information",
+        "Exercise", "Nutrition", "Sleep", "Medical", "Wellness", "Relaxation",
+        "Learning", "Reading", "Ideas", "Creativity",
+        "Budgets", "Investments", "Income", "Savings",
+        "Occupation", "Business", "Networking", "Development",
+        "Relationships", "Engagements", "Community",
+        "Assets"
+    ];
+
+    const labels = [
+        "🏆 Life<br>HQ",
+        "Foundational", "Health", "Knowledge", "Finance", "Career", "Social", "Lifestyle",
+        "Goals", "Habits", "Projects", "Time", "Decisions", "Values", "Mindset", "Information",
+        "Exercise", "Nutrition", "Sleep", "Medical", "Wellness", "Relaxation",
+        "Learning", "Reading", "Ideas", "Creativity",
+        "Budgets", "Investments", "Income", "Savings",
+        "Occupation", "Business", "Networking", "Development",
+        "Relationships", "Engagements", "Community",
+        "Home & Assets"
+    ];
+
+    const parents = [
+        "",
+        "HQ", "HQ", "HQ", "HQ", "HQ", "HQ", "HQ",
+        "Foundational", "Foundational", "Foundational", "Foundational", "Foundational", "Foundational", "Foundational", "Foundational",
+        "Health", "Health", "Health", "Health", "Health", "Health",
+        "Knowledge", "Knowledge", "Knowledge", "Knowledge",
+        "Finance", "Finance", "Finance", "Finance",
+        "Career", "Career", "Career", "Career",
+        "Social", "Social", "Social",
+        "Lifestyle"
+    ];
+
+    // IMPORTANT: Replace the "#" placeholders with your actual URLs.
+    const notion_urls = [
+        "#", // HQ
+        "https://www.notion.so/your-page-link", // Foundational
+        "https://www.notion.so/your-page-link", // Health
+        "https://www.notion.so/your-page-link", // Knowledge
+        "https://www.notion.so/your-page-link", // Finance
+        "https://www.notion.so/your-page-link", // Career
+        "https://www.notion.so/your-page-link", // Social
+        "https://www.notion.so/your-page-link", // Lifestyle
+        // Level 2...
+        "#", "#", "#", "#", "#", "#", "#", "#",
+        "#", "#", "#", "#", "#", "#",
+        "#", "#", "#", "#",
+        "#", "#", "#", "#",
+        "#", "#", "#", "#",
+        "#", "#", "#",
+        "#"
+    ];
+
+    // 4. Define the chart data using Plotly's JavaScript structure
+    // ---
+    const data = [{
+        type: "sunburst",
+        ids: ids,
+        labels: labels,
+        parents: parents,
+        customdata: notion_urls,
+        hovertemplate: '<b>%{label}</b><br>Click to zoom or open link<extra></extra>',
+        root: {
+            color: "lightgrey"
+        }
+    }];
+
+    // 5. Define the chart layout
+    // ---
+    const layout = {
+        margin: { t: 50, l: 20, r: 20, b: 20 },
+        title: {
+            text: "Life Management HQ",
+            font: {
+                size: 24,
+                family: "Arial, sans-serif"
+            }
+        }
+    };
+
+    // 6. Render the chart in the 'chartDiv' container
+    // ---
+    Plotly.newPlot('chartDiv', data, layout);
+
+    // 7. Add the click handler to open URLs
+    // ---
+    const myPlot = document.getElementById('chartDiv');
+    myPlot.on('plotly_click', function(data) {
+        var url = data.points[0].customdata;
+        // Check if the URL is valid and not just a placeholder
+        if (url && url !== '#') {
+            // Opens the URL in a new browser tab
+            window.open(url, '_blank');
+        }
+    });
+    </script>
+</body>
+</html>
